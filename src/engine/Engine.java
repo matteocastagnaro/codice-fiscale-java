@@ -1,8 +1,8 @@
 package engine;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
+
+import utils.Utils;
 
 
 public class Engine {
@@ -42,7 +42,7 @@ public class Engine {
 	}
 	
 	public String getCode(){
-		return code;
+		return codiceCitta().equals(Utils.ERROR) ? "*#ERRORE DI CALCOLO#*" : code;
 	}
 	
 	private String controlCode(String s) {
@@ -166,24 +166,10 @@ public class Engine {
 		}
 		return c;
 	}
-
-	@SuppressWarnings("resource")
-	private String codiceCitta() throws IOException {
-		FileReader f;
-		BufferedReader b;
-		String s="";
-		String str="";
-	    f=new FileReader(System.getProperty("user.dir")+"/src/document/data.txt");
-	    b=new BufferedReader(f);
-	    while( (s=b.readLine()) != null){
-	    	String a[] = s.split("\t");
-	    	String c=a[0];
-	    	String ct=a[1];
-	    	if(citta.compareTo(ct)==0)
-	    		str=c;
-	    }
-	    return str;
-	}
+	
+	private String codiceCitta() {
+        return Utils.getCitiesCodes().getKey(citta);
+    }
 
 	private String codiceData(){
 		String s="";

@@ -8,8 +8,10 @@ import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Map;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -20,6 +22,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import utils.Utils;
 import engine.Engine;
 import engine.Person;
 import engine.FinalWnd;
@@ -141,20 +144,13 @@ public class Wnd extends JFrame{
 		return p;
 	}
 	
-	@SuppressWarnings({ "resource","unchecked" })
+	@SuppressWarnings("unchecked")
 	private void cityNames() throws IOException {
-		FileReader f;
-		BufferedReader b;
-		String s="";
-		int i=0;
-	    f=new FileReader(System.getProperty("user.dir")+"/src/document/data.txt");
-	    b=new BufferedReader(f);
-	    while( (s=b.readLine()) != null){
-	    	String a[] = s.split("\t");
-	    	jcb_c.addItem(a[1]);
-	    }
+        for (Map.Entry<String, String> e : Utils.getCitiesCodes().entrySet()) {
+        	jcb_c.addItem(e.getValue());
+        }
 	}
-
+	
 	private JPanel okPanel() throws IOException {
 		JPanel p=new JPanel();
 		cityNames();
